@@ -33,7 +33,7 @@
     "phaser": "^3.12.0"
   },
   "gh-pages-deploy": {
-    "staticpath": "dist",
+    "staticpath": "dist"
   },
   "private": true
 }
