@@ -1,5 +1,6 @@
 //Sprite https://www.gameart2d.com/cute-girl-free-sprites.html
 //https://opengameart.org/content/alchemy-tools-1
+//<a href="https://pngtree.com/">Graphics from pngtree.com</a>
 
 //import Logo from '@/objects/logo';
 import Map from '@/objects/map';
@@ -42,6 +43,8 @@ export default class Game extends Phaser.Scene {
     score = new Score(this);
     Cameras(this, map, player);
     Animations(this);
+
+    player.updateText("Hello")
   
 
     this.physics.add.collider(map.groundLayer, player);

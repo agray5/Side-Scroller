@@ -18,7 +18,7 @@ export default function Map(scene) {
   // the player will collide with this layer
   map.groundLayer.setCollisionByExclusion([-1]);
 
-  let cauldron = scene.physics.add.sprite(400, 100, 'alchemy', 'cauldron');
+  let cauldron = scene.physics.add.sprite(700, 450, 'alchemy', 'cauldron');
   scene.physics.add.collider(map.groundLayer, cauldron);
 
 
