@@ -1,6 +1,7 @@
 //Sprite https://www.gameart2d.com/cute-girl-free-sprites.html
 //https://opengameart.org/content/alchemy-tools-1
 //<a href="https://pngtree.com/">Graphics from pngtree.com</a>
+//Code Inferno Games (codeinferno.com)
 
 //import Logo from '@/objects/logo';
 import Map from '@/objects/map';
@@ -9,12 +10,14 @@ import Player from '../objects/player';
 import Score from '../objects/score';
 import Animations from '../objects/animations';
 import Cameras from '../objects/cameras';
+import Gems from '../objects/gems';
 
-var map;
-var player;
-var input;
+let map;
+let player;
+let input;
+let gems;
 //var groundLayer, coinLayer;
-var score;
+let score;
 //var text;
  
 
@@ -36,18 +39,18 @@ export default class Game extends Phaser.Scene {
    *  @param {object} data Initialization parameters.
    */
   create(/* data */) {
+    this.groundLevel = 450;
     
     map = new Map(this);
-    player = new Player(this);
+    player = new Player(this, map);
     input = new Input(this, player);
     score = new Score(this);
+    gems = new Gems(this, map, player);
     Cameras(this, map, player);
     Animations(this);
 
-    player.updateText("Hello")
+    player.updateText('Hello');
   
-
-    this.physics.add.collider(map.groundLayer, player);
 
     map.coinLayer.setTileIndexCallback(17, collectCoin, this); // the coin id is 17
     // when the player overlaps with a tile with index 17, collectCoin will be called    

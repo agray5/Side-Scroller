@@ -34,6 +34,7 @@ export default class SplashScreen extends Phaser.Scene {
     this.showProgressBar();
 
     //  HINT: Declare all game assets to be loaded here.
+    this.load.image('ruby', 'gems/ruby.png');
     this.load.image('logo');
     this.load.image('coin', 'coinGold.png');
     this.load.image('speech-bubble', 'speechBubble.png');
