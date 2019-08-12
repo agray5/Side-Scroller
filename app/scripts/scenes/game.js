@@ -49,6 +49,10 @@ export default class Game extends Phaser.Scene {
     Cameras(this, map, player);
     Animations(this);
 
+    this.scene.launch('UI', {player});
+
+    gems;
+
     player.updateText('Hello');
   
 

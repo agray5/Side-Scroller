@@ -43,7 +43,7 @@ module.exports = [
   //
   //  Reference:
   //  - <https://github.com/webpack-contrib/eslint-loader#readme>
-  {
+  /*{
     test: /\.js$/,
     include: dirs.scripts,
     enforce: 'pre',
@@ -52,5 +52,5 @@ module.exports = [
       emitError: true,
       emitWarning: true
     }
-  }
+  }*/
 ];
