@@ -77,7 +77,7 @@ export const physics = {
   default: 'arcade',
   arcade: {
     gravity: { y: 500 }, // will affect our player sprite
-    debug: true // change if you need
+    debug: false // change if you need
   }
   /**
    *  Phaser Arcade Physics 2 parameters.

@@ -5,6 +5,7 @@
 
 //import Logo from '@/objects/logo';
 import { width as windowWidth, height as windowHeight } from '@/config'
+import UIBox from './uiBox';
  
 
 export default class UI extends Phaser.Scene {
@@ -26,23 +27,15 @@ export default class UI extends Phaser.Scene {
    */
   create( data ) {
     this.data = data;
-
     this.graphics = this.add.graphics();
-    this.graphics.lineStyle(1, 0xffffff);
-    this.graphics.fillStyle(0x031f4c, 1);        
-    this.graphics.strokeRect(2, 150, 90, 100);
-    this.graphics.fillRect(2, 150, 90, 100);
-    this.graphics.strokeRect(95, 150, 90, 100);
-    this.graphics.fillRect(95, 150, 90, 100);
-    this.graphics.strokeRect(188, 150, 130, 100);
-    this.graphics.fillRect(188, 150, 130, 100);
-
-    const rubies = this.box('rubyBar', windowWidth-230, 30, 200, 50);
+    //const textObj = this.add.text(0, 0, "I MA TEXT");
+    const rubies = new UIBox(this, 'rubyBar', windowWidth-230, 30, 200, 50, "Rubies:  0");
+    this.add.existing(rubies);
     this.data.player.on('collectRuby', (obj) => {
-      rubies.setText("Rubies:"+this.data.player.getData('rubies'))
+      rubies.setText("Rubies: "+this.data.player.getData('rubies'))
     })
   }
-
+/*
   box(ref, x, y, width, height, text = ''){
     let rx = width/Math.sqrt(2) + width*0.4;
     let ry = height/Math.sqrt(2) + width*0.4;
@@ -104,7 +97,7 @@ export default class UI extends Phaser.Scene {
 
    return container
   }
-
+*/
   /**
    *  Called when a scene is updated. Updates to game logic, physics and game
    *  objects are handled here.

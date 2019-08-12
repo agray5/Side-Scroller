@@ -8,6 +8,7 @@ export default function Animations(scene) {
     frames: [{key: 'alchemy', frame: 'cauldron'}],
   });
 
+
   scene.anims.create({
     key: 'walk',
     frames: scene.anims.generateFrameNames('player', { prefix: 'Walk', start: 1, end: 20 }),
