@@ -11,6 +11,7 @@ import Score from '../objects/score';
 import Animations from '../objects/animations';
 import Cameras from '../objects/cameras';
 import Gems from '../objects/gems';
+import EntityManager from '../entityManager';
 
 let map;
 let player;
@@ -48,6 +49,7 @@ export default class Game extends Phaser.Scene {
     gems = new Gems(this, map, player);
     Cameras(this, map, player);
     Animations(this);
+
 
     this.scene.launch('UI', {player});
 

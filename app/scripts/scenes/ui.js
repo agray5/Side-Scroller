@@ -5,6 +5,7 @@
 
 //import Logo from '@/objects/logo';
 import { width as windowWidth, height as windowHeight } from '@/config'
+import EntityManager from '@/entityManager';
 import UIBox from './uiBox';
  
 
