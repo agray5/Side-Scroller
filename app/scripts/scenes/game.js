@@ -1,7 +1,4 @@
-//Sprite https://www.gameart2d.com/cute-girl-free-sprites.html
-//https://opengameart.org/content/alchemy-tools-1
-//<a href="https://pngtree.com/">Graphics from pngtree.com</a>
-//Code Inferno Games (codeinferno.com)
+
 
 //import Logo from '@/objects/logo';
 import Map from '@/objects/map';

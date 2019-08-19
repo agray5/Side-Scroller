@@ -53,6 +53,8 @@ export default class DataManager {
 
     from_.emit("set", key);
     to.emit("set", key);
+
+    return canGet;
   }
 
 

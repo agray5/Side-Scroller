@@ -7,6 +7,9 @@ import DataManager from '../libs/dataManager'
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor (scene) {
     super(scene, 0, 0, "player");
+    this.emitter;
+    this.particles_rubies = this.scene.add.particles('ruby');
+    this.particles_rubies.setDepth(-1);
   }
 
   create() {
@@ -28,7 +31,34 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   transferRubies(from_, to){
-    this.DataManager.transferAmt(from_, to, 'rubies');
+    if(from_.getData('rubies')){
+      const amount = this.DataManager.transferAmt(from_, to, 'rubies');
+      console.log("AMount", amount)
+      if(this.emitter) this.emitter.stop();
+      
+      if(!this.emitter) this.emitter = this.particles_rubies.createEmitter(
+        {
+          x: to.x,
+          y: to.y-to.height,
+          speed: 20,
+          alpha: { start: 1, end: 0 },
+          scale: { start: 0.2, end: 0.5 },
+          accelerationY: 100,
+          angle: { min: -85, max: -95 },
+          rotate: { min: -180, max: 180 },
+          lifespan: { min: 1000, max: 1100 },
+          //tint: 0x990000,
+          frequency: 110,
+          quantity:1,
+          maxParticles: amount
+      });
+      else {
+        this.emitter.maxParticles = amount;
+        this.emitter.start();
+      }
+      setTimeout(() => this.emitter.stop(), 1000);
+    }
+
     /*const take_rubies = from_.getData('rubies');
     from_.setData('rubies', 0);
 
