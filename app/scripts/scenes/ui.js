@@ -5,8 +5,7 @@
 
 //import Logo from '@/objects/logo';
 import { width as windowWidth, height as windowHeight } from '@/config'
-import EntityManager from '@/entityManager';
-import UIBox from './uiBox';
+import UIBox from '@/objects/uiBox';
  
 
 export default class UI extends Phaser.Scene {
@@ -32,8 +31,10 @@ export default class UI extends Phaser.Scene {
     //const textObj = this.add.text(0, 0, "I MA TEXT");
     const rubies = new UIBox(this, 'rubyBar', windowWidth-230, 30, 200, 50, "Rubies:  0");
     this.add.existing(rubies);
-    this.data.player.on('collectRuby', (obj) => {
-      rubies.setText("Rubies: "+this.data.player.getData('rubies'))
+
+    this.data.player.on('set', (key) => {
+      if(key === 'rubies')
+        rubies.setText("Rubies: "+this.data.player.getData('rubies'))
     })
   }
 /*

@@ -11,7 +11,7 @@ import Score from '../objects/score';
 import Animations from '../objects/animations';
 import Cameras from '../objects/cameras';
 import Gems from '../objects/gems';
-import EntityManager from '../entityManager';
+import Cauldron from '../objects/cauldron';
 
 let map;
 let player;
@@ -30,6 +30,33 @@ export default class Game extends Phaser.Scene {
    */
   constructor() {
     super({key: 'Game'});
+    this.objects = {};
+  }
+
+  add(key, object, ...args){
+    this.objects[key] = new object(this,...args);
+    if(this.object[key].create)
+      this.object[key].create(this);
+  }
+
+  addAll(arr){
+    for(let i of arr){
+      this.objects[i[0]] = new i[1](this,...i.slice(2));
+    }
+    for(let i of arr){
+      if(this.objects[i[0]].create){
+        console.log("Create", this.physics)
+        this.objects[i[0]].create(this);
+      }
+    }
+  }
+
+  get(key){
+    return this.objects[key];
+  }
+
+  del(key){
+    delete this.objects[key];
   }
 
   /**
@@ -41,26 +68,20 @@ export default class Game extends Phaser.Scene {
    */
   create(/* data */) {
     this.groundLevel = 450;
-    
-    map = new Map(this);
-    player = new Player(this, map);
-    input = new Input(this, player);
-    score = new Score(this);
-    gems = new Gems(this, map, player);
-    Cameras(this, map, player);
-    Animations(this);
+    const scene = this;
 
+    this.addAll([
+      ["map", Map],
+      ["input", Input],
+      ["score", Score],
+      ["cauldron", Cauldron, 700, scene.groundLevel, this.get("map")],
+      ["gems", Gems],
+      ["player", Player],
+      ["cameras", Cameras],
+      ["animations", Animations]
+    ])
 
-    this.scene.launch('UI', {player});
-
-    gems;
-
-    player.updateText('Hello');
-  
-
-    map.coinLayer.setTileIndexCallback(17, collectCoin, this); // the coin id is 17
-    // when the player overlaps with a tile with index 17, collectCoin will be called    
-    this.physics.add.overlap(player, map.coinLayer); 
+    this.scene.launch('UI', this.objects);
   }
 
   /**
@@ -72,13 +93,11 @@ export default class Game extends Phaser.Scene {
    *  @param {number} dt Time elapsed since last update.
    */
   update(t, dt) {
-    input.update(t, dt);
-    player.update(t, dt);
+    
+    Object.values(this.objects).forEach(obj => {
+      if(obj.update){
+        obj.update(this, t, dt)
+      }
+    })
   }
-}
-
-function collectCoin(sprite, tile) {
-  map.coinLayer.removeTileAt(tile.x, tile.y); // remove the tile/coin
-  score.value ++; // increment the score
-  return false;
 }

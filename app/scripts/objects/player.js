@@ -1,64 +1,61 @@
+import DataManager from '../libs/dataManager'
 /**
  * 
  * @param {Phaser.Scene} scene 
  * @param {Phaser.Tilemaps.Tilemap} map
  */
-export default function Player(scene, map) {
-  let player = scene.physics.add.sprite(0, 0, 'player');
-  player.setSize(player.width*0.3, player.height);
+export default class Player extends Phaser.Physics.Arcade.Sprite {
+  constructor (scene) {
+    super(scene, 0, 0, "player");
+  }
 
-  player.setDataEnabled();
-                            
-  player.scene = scene;
+  create() {
+    const scene = this.scene 
+    scene.physics.world.enable(this);
+    scene.add.existing(this);
 
-  scene.physics.add.collider(map.groundLayer, player);
+    this.DataManager = new DataManager(this);
+    scene.physics.add.collider(scene.get("map").map.groundLayer, this);
+    this.setSize(this.width*0.3, this.height);
+    this.scaleX = 0.3;
+    this.scaleY = 0.3;
+    this.setBounce(0.2); // our player will bounce from items
+    this.state = 'idle';
 
-  player.scaleX = 0.3;
-  player.scaleY = 0.3;
-  player.setBounce(0.2); // our player will bounce from items
-  player.setCollideWorldBounds(true); // don't go out of the map
+    // when the player overlaps with a tile with index 17, collectCoin will be called    
+    scene.physics.add.overlap(this, scene.get("map").coinLayer); 
+    scene.physics.add.overlap(this, scene.get("cauldron"), this.transferRubies.bind(this), false, scene);
+  }
 
-  player.state = 'idle';
-  player.update = update.bind(player);
-  player.updateText = updateText.bind(player);
-  player.collect = collect.bind(player);
+  transferRubies(from_, to){
+    this.DataManager.transferAmt(from_, to, 'rubies');
+    /*const take_rubies = from_.getData('rubies');
+    from_.setData('rubies', 0);
 
-  player.container = scene.add.container(200, 200);
+    const has_rubies = to.getData('rubies');
+    const give_rubies = (has_rubies?has_rubies:0) + (take_rubies?take_rubies:0);
+    to.setData('rubies', give_rubies);*/
+  }
 
-  player.container.add(player);
-  player.on('collectRuby', collectRuby.bind(player));
+  update (scene) {
+    this.anims.play(this.state, true);
+  }
 
-  return player;
+  collect(player, toCollect) {
+    player.DataManager.increment('rubies');
+    toCollect.destroy();
+  }
+
+
 }
 
 
 
-function update () {
-  this.anims.play(this.state, true);
-}
-
-/**
- * @this {Phaser.Physics.Arcade.Sprite}
- */
-function collectRuby(){
-  const rubies = this.getData('rubies');
-  this.setData('rubies', rubies?rubies+1:1);
-}
-
-/**
- * @this {Phaser.Physics.Arcade.Sprite}
- * @param {Phaser.Physics.Arcade.Sprite} player 
- * @param {Phaser.GameObjects.GameObject } toCollect 
- */
-function collect(player, toCollect) {
-  player.emit('collect'+toCollect.name);
-  toCollect.destroy();
-}
-
+/*
 function updateText(text){
   text = this.scene.add.text(0, -20, 'Testing');
   text.font = 'Arial';
   text.setOrigin(0.5, 0.5);
   this.container.add(text);
 }
-
+*/

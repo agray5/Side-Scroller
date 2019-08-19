@@ -2,21 +2,26 @@
  * 
  * @param {Phaser.Scene} scene 
  */
-export default function Score(scene, value = 0) {
-  let text = scene.add.text(20, 570, '0', {
-    fontSize: '20px',
-    fill: '#ffffff'
-  });
-  text.setScrollFactor(0);
+export default class Score extends Phaser.GameObjects.Text { 
 
-  text._value = value;
+  constructor (scene, value = 0) {
+    super(scene, 20, 570, value.toString(), {
+      fontSize: '20px',
+      fill: '#ffffff'
+    });
+  }
 
-  Object.defineProperty(text, 'value', {
-    get: function() { return this._value; },
-    set: function(setter) {
-      this._value = setter;
-      this.setText(setter); // set the text to show the current score
-    }
-  });
-  return text;
+  get value() {
+    return this._value;
+  }
+  
+  set value(val) {
+    this._value = val;
+    this.setText(val);
+  }
+
+  create(scene) {
+    this.setScrollFactor(0);
+
+  }
 }
