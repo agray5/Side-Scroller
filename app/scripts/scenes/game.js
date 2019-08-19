@@ -8,16 +8,7 @@ import Score from '../objects/score';
 import Animations from '../objects/animations';
 import Cameras from '../objects/cameras';
 import Gems from '../objects/gems';
-import Cauldron from '../objects/cauldron';
-
-let map;
-let player;
-let input;
-let gems;
-//var groundLayer, coinLayer;
-let score;
-//var text;
- 
+import Cauldron from '../objects/cauldron'; 
 
 export default class Game extends Phaser.Scene {
   /**

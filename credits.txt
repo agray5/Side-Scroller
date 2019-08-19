@@ -3,3 +3,5 @@ https://opengameart.org/content/alchemy-tools-1
 <a href="https://pngtree.com/">Graphics from pngtree.com</a>
 Code Inferno Games (codeinferno.com)
 https://www.kenney.nl/assets/particle-pack
+
+For attribution, please state my name, Hansjörg Malthaner, and link here: http://opengameart.org/users/varkalandar

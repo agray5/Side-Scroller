@@ -1,11 +1,7 @@
-//Sprite https://www.gameart2d.com/cute-girl-free-sprites.html
-//https://opengameart.org/content/alchemy-tools-1
-//<a href="https://pngtree.com/">Graphics from pngtree.com</a>
-//Code Inferno Games (codeinferno.com)
-
 //import Logo from '@/objects/logo';
 import { width as windowWidth, height as windowHeight } from '@/config'
 import UIBox from '@/objects/uiBox';
+import ProgressBar from '../objects/progressBar';
  
 
 export default class UI extends Phaser.Scene {
@@ -31,6 +27,17 @@ export default class UI extends Phaser.Scene {
     //const textObj = this.add.text(0, 0, "I MA TEXT");
     const rubies = new UIBox(this, 'rubyBar', windowWidth-230, 30, 200, 50, "Rubies:  0");
     this.add.existing(rubies);
+
+    this.progressBar = new ProgressBar(this, 0, 0);
+    this.progressBar.value = 0;
+    /*
+    var timer = this.time.addEvent({
+      delay: 100,                // ms
+      callback: () => {this.progressBar.value= (this.progressBar.value+0.1)%1},
+      //args: [],
+      callbackScope: this,
+      repeat: -1
+  });*/
 
     this.data.player.on('set', (key) => {
       if(key === 'rubies')
@@ -109,5 +116,6 @@ export default class UI extends Phaser.Scene {
    *  @param {number} dt Time elapsed since last update.
    */
   update(/*t, dt*/) {
+    this.progressBar.update(this)
   }
 }
