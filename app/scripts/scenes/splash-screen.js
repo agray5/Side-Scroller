@@ -39,6 +39,7 @@ export default class SplashScreen extends Phaser.Scene {
     this.load.image('logo');
     this.load.image('coin', 'coinGold.png');
     this.load.image('speech-bubble', 'speechBubble.png');
+    this.load.atlas('potions', 'potion.png', 'potion.json');
     this.load.atlas('alchemy', 'Alchemy tools.png', 'alchemy.json');
     this.load.atlas('player', 'spritesheet.png','sprites.json');
     this.load.atlas('player-idle', 'idle.png','idle.json');

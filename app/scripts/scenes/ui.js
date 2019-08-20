@@ -2,6 +2,7 @@
 import { width as windowWidth, height as windowHeight } from '@/config'
 import UIBox from '@/objects/uiBox';
 import ProgressBar from '../objects/progressBar';
+import Resources from '../libs/resources';
  
 
 export default class UI extends Phaser.Scene {
@@ -24,9 +25,12 @@ export default class UI extends Phaser.Scene {
   create( data ) {
     this.data = data;
     this.graphics = this.add.graphics();
-    //const textObj = this.add.text(0, 0, "I MA TEXT");
-    const rubies = new UIBox(this, 'rubyBar', windowWidth-230, 30, 200, 50, "Rubies:  0");
+
+    const rubies = new UIBox(this, 'rubyBar', windowWidth-100, 30, 200, 50, "Rubies:  0");
     this.add.existing(rubies);
+
+    const ingots = new UIBox(this, 'ingotBar', windowWidth-300, 30, 200, 50, "Ingots:  0");
+    this.add.existing(ingots);
 
     this.progressBar = new ProgressBar(this, 0, 0);
     this.progressBar.value = 0;
@@ -39,9 +43,11 @@ export default class UI extends Phaser.Scene {
       repeat: -1
   });*/
 
-    this.data.player.on('set', (key) => {
-      if(key === 'rubies')
-        rubies.setText("Rubies: "+this.data.player.getData('rubies'))
+    Resources.on('set', (key) => {
+      if(key === 'player_rubies')
+        rubies.setText("Rubies: "+Resources.get('player_rubies'))
+      else if(key === 'ingots')
+        ingots.setText("Ingots: "+Resources.get('ingots'))
     })
   }
 /*
@@ -116,6 +122,7 @@ export default class UI extends Phaser.Scene {
    *  @param {number} dt Time elapsed since last update.
    */
   update(/*t, dt*/) {
+    this.progressBar.value = this.data.cauldron.getProgress("ruby", "ingot")
     this.progressBar.update(this)
   }
 }

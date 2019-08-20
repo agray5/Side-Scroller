@@ -1,6 +1,6 @@
 import DataManager from '../libs/dataManager'
+import Resources from '../libs/resources';
 /**
- * 
  * @param {Phaser.Scene} scene 
  * @param {Phaser.Tilemaps.Tilemap} map
  */
@@ -25,17 +25,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setBounce(0.2); // our player will bounce from items
     this.state = 'idle';
 
+
+    this.setCollideWorldBounds(true);
+
     // when the player overlaps with a tile with index 17, collectCoin will be called    
     scene.physics.add.overlap(this, scene.get("map").coinLayer); 
     scene.physics.add.overlap(this, scene.get("cauldron"), this.transferRubies.bind(this), false, scene);
   }
 
   transferRubies(from_, to){
-    if(from_.getData('rubies')){
-      const amount = this.DataManager.transferAmt(from_, to, 'rubies');
-      console.log("AMount", amount)
-      if(this.emitter) this.emitter.stop();
-      
+    if(Resources.get('player_rubies')){
+      const amount = Resources.transferAmt('player_rubies', 'cauldron_rubies');
+
+      if(this.emitter) this.emitter.stop();      
       if(!this.emitter) this.emitter = this.particles_rubies.createEmitter(
         {
           x: to.x,
@@ -72,7 +74,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   collect(player, toCollect) {
-    player.DataManager.increment('rubies');
+    Resources.increment('player_rubies');
     toCollect.destroy();
   }
 
