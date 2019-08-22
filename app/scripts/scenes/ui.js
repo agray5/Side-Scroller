@@ -29,10 +29,10 @@ export default class UI extends Phaser.Scene {
     const rubies = new UIBox(this, 'rubyBar', windowWidth-100, 30, 200, 50, "Rubies:  0");
     this.add.existing(rubies);
 
-    const ingots = new UIBox(this, 'ingotBar', windowWidth-300, 30, 200, 50, "Ingots:  0");
-    this.add.existing(ingots);
+    const potion_reds = new UIBox(this, 'potion_redBar', windowWidth-300, 30, 200, 50, "Potion:  0");
+    this.add.existing(potion_reds);
 
-    this.progressBar = new ProgressBar(this, 0, 0);
+    this.progressBar = new ProgressBar(this, windowWidth-400, 40);
     this.progressBar.value = 0;
     /*
     var timer = this.time.addEvent({
@@ -46,8 +46,8 @@ export default class UI extends Phaser.Scene {
     Resources.on('set', (key) => {
       if(key === 'player_rubies')
         rubies.setText("Rubies: "+Resources.get('player_rubies'))
-      else if(key === 'ingots')
-        ingots.setText("Ingots: "+Resources.get('ingots'))
+      else if(key === 'potion_reds')
+        potion_reds.setText("Potion: "+Resources.get('potion_reds'))
     })
   }
 /*
@@ -122,7 +122,7 @@ export default class UI extends Phaser.Scene {
    *  @param {number} dt Time elapsed since last update.
    */
   update(/*t, dt*/) {
-    this.progressBar.value = this.data.cauldron.getProgress("ruby", "ingot")
+    this.progressBar.set(this.data.cauldron.getProgress("ruby", "potion_red"))
     this.progressBar.update(this)
   }
 }

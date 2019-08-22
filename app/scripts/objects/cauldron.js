@@ -1,4 +1,5 @@
 import Resources from "../libs/resources";
+import Collectable from "./prototype/collectable";
 
 export default class Cauldron extends Phaser.Physics.Arcade.Sprite {
   /**
@@ -12,18 +13,19 @@ export default class Cauldron extends Phaser.Physics.Arcade.Sprite {
     this.jobs = [
       {
         from: "ruby",
-        to: "ingot",
+        to: "potion_red",
         time: 0,
         running: false
       }
     ]
     this.info = {
       ruby: {
-        ingot: {
+        potion_red: {
           ratio: 2,
           time: 2,
           from_res: "cauldron_rubies",
-          to_res: "ingots"
+          to_res: "potion_reds",
+          spawn: ["potions", "red"]
         }
       }
     }
@@ -68,9 +70,13 @@ export default class Cauldron extends Phaser.Physics.Arcade.Sprite {
   }
 
   stop(job) {
+    const info = this.get(job);
     job.running = false;
     job.time.paused = true;
-    Resources.increment(this.get(job).to_res);
+    const collect = new Collectable(this.scene, Phaser.Math.Between(this.x-100, this.x+100), Phaser.Math.Between(this.y-50, this.y-100), info.to_res, ...info.spawn)
+    collect.create({scaleX: 0.3, scaleY: 0.3});
+    this.scene.physics.add.collider(this.scene.get("map").map.groundLayer, collect);
+    //Resources.increment(this.get(job).to_res);
   }
 
   update(t, dt) {

@@ -4,7 +4,7 @@ class Resources extends Phaser.Events.EventEmitter {
     this.obj = {
       player_rubies: 0,
       cauldron_rubies: 0,
-      ingots: 0
+      potion_reds: 0
     }
   }
 
