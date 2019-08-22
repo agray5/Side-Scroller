@@ -10,7 +10,8 @@
     "format": "eslint \"app/scripts/**/*.js\" --fix",
     "lint": "eslint \"app/scripts/**/*.js\"",
     "start": "gulp",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "deploy.nobuild": "gh-pages -d dist"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

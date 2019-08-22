@@ -1,5 +1,6 @@
 import DataManager from '../libs/dataManager'
 import Resources from '../libs/resources';
+import SpeechBubble from '../objects/speech'
 /**
  * @param {Phaser.Scene} scene 
  * @param {Phaser.Tilemaps.Tilemap} map
@@ -16,6 +17,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     const scene = this.scene 
     scene.physics.world.enable(this);
     scene.add.existing(this);
+
+    this.speech = new SpeechBubble(scene, this.x, this.y+100, "Hello I am player").create();
 
     this.DataManager = new DataManager(this);
     scene.physics.add.collider(scene.get("map").map.groundLayer, this);
@@ -69,8 +72,25 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     to.setData('rubies', give_rubies);*/
   }
 
+  walk(velocity, flip) {
+    this.body.setVelocityX(velocity); 
+
+    if(velocity !== 0 && this.body.onFloor()) this.state = 'walk';
+    else if(velocity === 0 && this.body.onFloor()) this.state = 'idle';
+
+    if(flip !== undefined || flip !== null) this.flipX = flip;
+
+    return this;
+  }
+
+  jump(velocity) {
+    this.state = 'jump';
+    this.body.setVelocityY(velocity);
+  }
+
   update (scene) {
     this.anims.play(this.state, true);
+    this.speech.update(this.x, this.y-this.height/3);
   }
 
   collect(player, toCollect) {
