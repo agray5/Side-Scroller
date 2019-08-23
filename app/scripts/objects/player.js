@@ -78,7 +78,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if(velocity !== 0 && this.body.onFloor()) this.state = 'walk';
     else if(velocity === 0 && this.body.onFloor()) this.state = 'idle';
 
-    if(flip !== undefined || flip !== null) this.flipX = flip;
+    if(flip !== undefined && flip !== null) this.flipX = flip;
 
     return this;
   }

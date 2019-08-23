@@ -11,3 +11,4 @@ node_modules/
 !.eslint*
 !.yo-rc.json
 !.editorconfig
+app/static/assets/idle.xcf
