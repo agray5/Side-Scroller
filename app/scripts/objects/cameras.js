@@ -15,4 +15,6 @@ Cameras.prototype.create = (scene) => {
   // set background color, so the sky is not black    
   scene.cameras.main.setBackgroundColor('#ccccff'); 
 
+  scene.cameras.main.roundPixels = true;
+
 }

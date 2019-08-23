@@ -35,6 +35,7 @@ export default class SplashScreen extends Phaser.Scene {
 
     //  HINT: Declare all game assets to be loaded here.
     this.load.image('spark', 'effect/flare_01.png');
+    this.load.image('background', 'background.png');
     this.load.image('ruby', 'gems/gem5.png');
     this.load.image('logo');
     this.load.image('coin', 'coinGold.png');

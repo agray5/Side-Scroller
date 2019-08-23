@@ -18,7 +18,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.world.enable(this);
     scene.add.existing(this);
 
-    this.speech = new SpeechBubble(scene, this.x, this.y+100, "Hello I am player").create();
+    //this.speech = new SpeechBubble(scene, this.x, this.y+100, "Hello I am player").create();
 
     this.DataManager = new DataManager(this);
     scene.physics.add.collider(scene.get("map").map.groundLayer, this);
@@ -90,7 +90,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   update (scene) {
     this.anims.play(this.state, true);
-    this.speech.update(this.x, this.y-this.height/3);
+    //this.speech.update(this.x, this.y-this.height/3);
   }
 
   collect(player, toCollect) {
