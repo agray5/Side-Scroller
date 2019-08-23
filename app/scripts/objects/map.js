@@ -28,6 +28,8 @@ export default class Map {
     this.background = this.scene.add.tileSprite(0, 0, map.groundLayer.width, imageHeight, 'background').setOrigin(0, 0)
     this.background.setDepth(-1);
 
+    console.log("AMP", map.groundLayer.width)
+
     // coin image used as tileset
     let coinTiles = map.addTilesetImage('coin');
     // add coins as tiles
@@ -39,7 +41,6 @@ export default class Map {
     scene.physics.world.bounds.height = map.groundLayer.height;
 
     coinLayer.setTileIndexCallback(17, this.collectCoin, this); // the coin id is 17
-  
   }
 
   collectCoin(sprite, tile) {
