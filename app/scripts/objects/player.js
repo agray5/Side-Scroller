@@ -11,6 +11,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.emitter;
     this.particles_rubies = this.scene.add.particles('ruby');
     this.particles_rubies.setDepth(-1);
+
+    this.speed = 200;
+    this.moveTo = null;
   }
 
   create() {
@@ -72,7 +75,25 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     to.setData('rubies', give_rubies);*/
   }
 
-  walk(velocity, flip) {
+  /** @param {"left"|"right"|"stop"} dir */
+  walk(dir) {
+    let velocity = 0;
+    let flip;
+
+    switch(dir){
+      case "right": 
+        velocity = this.speed;
+        flip = false;
+        
+        break;
+      case "left":
+        velocity = -1*this.speed;
+        flip = true;
+        break;
+    }
+
+    //console.log("Dir", dir)
+
     this.body.setVelocityX(velocity); 
 
     if(velocity !== 0 && this.body.onFloor()) this.state = 'walk';

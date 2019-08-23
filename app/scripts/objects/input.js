@@ -18,30 +18,36 @@ export default class Input {
     this.scene = scene;
   }
 
+  create(scene) {
+    scene.input.on('pointerdown', function(pointer){
+      let touchX = pointer.worldX;
+      scene.get("player").moveTo = touchX;
+   });
+  
+  }
+
+
+
   update (scene, /*t, dt*/) {
     /** @type{Player} */
     const player = scene.get("player");
 
     if (this.input.left.isDown || this.WASD.left.isDown) {
-      player.walk(-200, true);
-      /*
-      player.body.setVelocityX(-200); // move left
-      if(player.body.onFloor()) player.state = 'walk'; // play walk animation
-      player.flipX = true; // flip the sprite to the left*/
+      player.moveTo = null;
+      player.walk("left");
     }
     else if (this.input.right.isDown || this.WASD.right.isDown) {
-      player.walk(200, false);
-      /*
-      player.body.setVelocityX(200); // move right
-      if(player.body.onFloor()) player.state = 'walk'; // play walk animatio
-      player.flipX = false; // use the original sprite looking to the right
-      */
+      player.moveTo = null;
+      player.walk("right");
     }
     else {
-      player.walk(0);
-      /*
-      player.body.setVelocityX(0);
-      if(player.body.onFloor()) player.state = 'idle';*/
+      console.log("X", player.x, player.moveTo-10, player.moveTo && player.x < player.moveTo-10 )
+      if(player.moveTo && player.x > player.moveTo+10)
+        player.walk("left");
+      else if(player.moveTo && player.x < player.moveTo-10)
+        player.walk("right");
+      else
+        player.walk("stop");
     }  
     if ((this.input.space.isDown || this.input.up.isDown || this.WASD.up.isDown) && player.body.onFloor()) {
       player.jump(-500);
