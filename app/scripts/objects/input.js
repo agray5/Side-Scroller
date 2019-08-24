@@ -20,8 +20,13 @@ export default class Input {
 
   create(scene) {
     scene.input.on('pointerdown', function(pointer){
+      const player = scene.get("player");
       let touchX = pointer.worldX;
-      scene.get("player").moveTo = touchX;
+      let touchY = pointer.worldY;
+
+      if(touchY < player.y - 10 /*&& touchX < player.x + 80 && touchX > player.x - 80*/) 
+        player.jump();
+      player.moveTo = touchX;
    });
   
   }
@@ -49,7 +54,7 @@ export default class Input {
       else
         player.walk("stop");
     }  
-    if ((this.input.space.isDown || this.input.up.isDown || this.WASD.up.isDown) && player.body.onFloor()) {
+    if (this.input.space.isDown || this.input.up.isDown || this.WASD.up.isDown) {
       player.jump(-500);
       /*
       player.state = 'jump';

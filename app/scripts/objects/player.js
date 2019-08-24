@@ -104,9 +104,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     return this;
   }
 
-  jump(velocity) {
-    this.state = 'jump';
-    this.body.setVelocityY(velocity);
+  jump(velocity = -500) {
+    if(this.body.onFloor()){
+      this.state = 'jump';
+      this.body.setVelocityY(velocity);
+    }
   }
 
   update (scene) {
