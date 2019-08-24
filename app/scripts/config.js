@@ -15,12 +15,13 @@ import * as scenes from '@/scenes';
 /**
  *  Game canvas width.
  */
-export const width = 800;
+export const width = Math.min(800, window.innerWidth);
+
 
 /**
  *  Game canvas height.
  */
-export const height = 600;
+export const height = Math.min(600, window.innerHeight);
 
 /**
  *  Adjust zoom factor.
