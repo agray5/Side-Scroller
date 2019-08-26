@@ -1,5 +1,3 @@
-
-
 //import Logo from '@/objects/logo';
 import Map from '@/objects/map';
 import Input from '@/objects/input';
@@ -9,6 +7,7 @@ import Animations from '../objects/animations';
 import Cameras from '../objects/cameras';
 import Gems from '../objects/gems';
 import Cauldron from '../objects/cauldron'; 
+import NPC1 from '../objects/npc1';
 
 export default class Game extends Phaser.Scene {
   /**
@@ -64,6 +63,7 @@ export default class Game extends Phaser.Scene {
       ["score", Score],
       ["cauldron", Cauldron, 700, scene.groundLevel, this.get("map")],
       ["gems", Gems],
+      ["npc1", NPC1, 800, scene.groundLevel -100],
       ["player", Player],
       ["cameras", Cameras],
       ["animations", Animations]

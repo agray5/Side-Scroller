@@ -1,5 +1,6 @@
 .*
 *.log
+*.xcf
 Thumbs.db
 
 dist/

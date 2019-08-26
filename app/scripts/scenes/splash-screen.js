@@ -43,6 +43,7 @@ export default class SplashScreen extends Phaser.Scene {
     this.load.atlas('potions', 'potion.png', 'potion.json');
     this.load.atlas('alchemy', 'Alchemy tools.png', 'alchemy.json');
     this.load.atlas('player', 'spritesheet.png','sprites.json');
+    this.load.atlas('npc1', 'npc1.png','npc1.json');
     this.load.atlas('player-idle', 'idle.png','idle.json');
     this.load.atlas('player-jump', 'jump.png','jump.json');
     this.load.spritesheet('tiles', 'tiles.png', {frameWidth: 70, frameHeight: 70});

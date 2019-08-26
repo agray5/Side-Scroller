@@ -1,11 +1,11 @@
-import DataManager from '../libs/dataManager'
 import Resources from '../libs/resources';
 import SpeechBubble from '../objects/speech'
+import Person from './prototype/person';
 /**
  * @param {Phaser.Scene} scene 
  * @param {Phaser.Tilemaps.Tilemap} map
  */
-export default class Player extends Phaser.Physics.Arcade.Sprite {
+export default class Player extends Person {
   constructor (scene) {
     super(scene, 0, 0, "player");
     this.emitter;
@@ -14,25 +14,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.speed = 200;
     this.moveTo = null;
+    this.state = 'idle';
   }
 
   create() {
+    super.create();
+
     const scene = this.scene 
-    scene.physics.world.enable(this);
-    scene.add.existing(this);
 
-    //this.speech = new SpeechBubble(scene, this.x, this.y+100, "Hello I am player").create();
-
-    this.DataManager = new DataManager(this);
-    scene.physics.add.collider(scene.get("map").map.groundLayer, this);
     this.setSize(this.width*0.3, this.height);
     this.scaleX = 0.3;
     this.scaleY = 0.3;
     this.setBounce(0.2); // our player will bounce from items
-    this.state = 'idle';
-
-
-    this.setCollideWorldBounds(true);
 
     // when the player overlaps with a tile with index 17, collectCoin will be called    
     scene.physics.add.overlap(this, scene.get("map").coinLayer); 
@@ -109,11 +102,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.state = 'jump';
       this.body.setVelocityY(velocity);
     }
-  }
-
-  update (scene) {
-    this.anims.play(this.state, true);
-    //this.speech.update(this.x, this.y-this.height/3);
   }
 
   collect(player, toCollect) {

@@ -1,15 +1,51 @@
 export default class SpeechBubble extends Phaser.GameObjects.Graphics { 
   constructor (scene, x, y, quote, width = 100, height = 100) {
     super(scene, { x, y });
-    this.quote = quote;
+    this.isShowing = true;
 
     this.bubbleWidth = width;
     this.bubbleHeight = height;
     this.bubblePadding = 10;
     this.arrowHeight = this.bubbleHeight / 4;
 
-    this.content = this.scene.add.text(0, 0, this.quote, { fontFamily: 'Arial', fontSize: 20, color: '#000000', align: 'center', wordWrap: { width: this.bubbleWidth - (this.bubblePadding * 2) } });
+    this.content = this.scene.add.text(0, 0, quote, { 
+      fontFamily: 'Arial', 
+      fontSize: 20, 
+      color: '#000000', 
+      align: 'center', 
+      wordWrap: { width: this.bubbleWidth - (this.bubblePadding * 2) },  
+      boundsAlignH: "center", // bounds center align horizontally
+      boundsAlignV: "middle" });
     this.b = this.content.getBounds();
+  }
+
+  set(text) {
+    this.content.setText(text);
+    this.b = this.content.getBounds();
+    return this;
+  }
+
+  setGAlpha(amt) {
+    this.setAlpha(amt);
+    this.content.setAlpha(amt);
+  }
+
+  hide() {
+    this.setGAlpha(0);
+    this.isShowing = false;
+    return this;
+  }
+
+  show() {
+    this.setGAlpha(1);
+    this.isShowing = true;
+    return this;
+  }
+
+  toggle() {
+    const alpha = this.alpha;
+    this.isShowing = alpha===1?0:1;
+    this.setAlpha(alpha===1?0:1);
   }
 
   draw(x, y) {
