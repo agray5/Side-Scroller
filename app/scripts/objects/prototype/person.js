@@ -1,6 +1,7 @@
 import DataManager from '../../libs/dataManager'
 import DialogManager from '../../libs/dialogManager'
 import SpeechBubble from '../speech'
+import { checkOverlap } from '../../utils/collision'
 
 
 export default class Person extends Phaser.Physics.Arcade.Sprite {
@@ -17,6 +18,9 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
     //this.state = 'idle';
     this.setCollideWorldBounds(true);
 
+    this.flags = {};
+    this.allowPlayText = true;
+
     if(name) {
       this.talking = false;
       this.DialogManager = new DialogManager(name);
@@ -29,15 +33,24 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
 
   update (scene) {
     this.anims.play(this.state, true);
+
     if(this.speech){
+      const player = this.scene.get("player");
       if(this.speech.isShowing)
         this.speech.update(this.x, this.y-this.height/3);
+
+        console.log("Overlapping", checkOverlap(this, player))
+        if(this.flags.overlap === true && !checkOverlap(this, player)) {
+          this.flags.overlap = false;
+      }
     }
   }  
 
   onOverlap() {
-    this.facePlayer();
     this.talk();
+    this.facePlayer();
+
+    if(!this.flags.overlap) this.flags.overlap = true;
   }
 
   facePlayer () {
@@ -52,13 +65,23 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
   }
   
   talk() {
-    if(!this.talking) {
+    if(!this.talking && this.allowPlayText) {
       const text = this.DialogManager.getText();
-      console.log("Text", text, !!text)
         if(text) {
-          console.log("Show text")
           this.talking = true;
           this.speech.set(text).show();
+
+          //Extra pause when starting next text prompt state
+          if(this.DialogManager.done){
+            this.allowPlayText = false;
+            this.scene.time.addEvent({
+              delay: 5000,
+              callback: () => {
+                this.allowPlayText = true;
+              },
+              callbackScope: this.speech,
+            });
+          }
 
           this.scene.time.addEvent({
             delay: 3000,

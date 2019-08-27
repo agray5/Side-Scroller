@@ -49,6 +49,14 @@ export default class SplashScreen extends Phaser.Scene {
     this.load.spritesheet('tiles', 'tiles.png', {frameWidth: 70, frameHeight: 70});
     this.load.spritesheet('nature', 'plants.png', {frameWidth: 70, frameHeight: 70});
     this.load.tilemapTiledJSON('map', 'map.json');
+
+    //Plugins
+    
+    const plugins = [
+      ["rexbbcodetextplugin", "https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/plugins/dist/rexbbcodetextplugin.min.js", true]
+    ]
+    plugins.forEach(plugin => console.log("Loadied", this.load.plugin(...plugin)));
+    console.log("PLUGIN", this.plugins.get('rexbbcodetextplugin'))
   }
 
   /**

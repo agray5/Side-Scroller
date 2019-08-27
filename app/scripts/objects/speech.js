@@ -1,5 +1,5 @@
 export default class SpeechBubble extends Phaser.GameObjects.Graphics { 
-  constructor (scene, x, y, quote, width = 150, height = 100) {
+  constructor (scene, x, y, quote, width = 150, height = 120) {
     super(scene, { x, y });
     this.isShowing = true;
 

@@ -18,6 +18,7 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.0.0",
     "babel-loader": "^8.0.2",
+    "babel-plugin-root-import": "^6.4.1",
     "browser-sync": "^2.24.7",
     "copy-webpack-plugin": "^4.5.2",
     "del": "^3.0.0",
@@ -34,7 +35,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "gh-pages": "^2.0.1",
-    "phaser": "^3.12.0"
+    "phaser": "^3.12.0",
+    "phaser3-rex-plugins": "^1.0.0"
   },
   "gh-pages-deploy": {
     "staticpath": "dist"

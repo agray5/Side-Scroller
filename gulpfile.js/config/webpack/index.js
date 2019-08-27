@@ -44,7 +44,8 @@ module.exports = (env = 'development') => ({
 
     alias: {
       //  For convenience, makes '@' an alias of the source directory.
-      '@': dirs.scripts
+      '@': dirs.scripts,
+      'node_modules/phaser3-rex-plugins/plugins': 'node_modules/phaser3-rex-plugins/plugins'
     }
   },
 
