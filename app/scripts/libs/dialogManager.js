@@ -1,14 +1,15 @@
-
 export default class DialogManager {
-  constructor(dialogPath, speechBubble, initState = "init") {
-    this.speechBubble = speechBubble;
+  constructor(dialogPath, initState = "init") {
     this.state = initState;
     this.index = -1;
 
-    this.dialogData = require("../data/dialog/"+dialogPath);
+    console.log("Dialog", dialogPath)
+
+    this.dialogData = require("../data/dialog/"+dialogPath).default;
   }
 
   getText() {
+    console.log("DIALOG", this.dialogData)
     const state = this.dialogData[this.state];
     if(!state.type) state.type = "static";
 

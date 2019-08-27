@@ -1,5 +1,5 @@
 export default class SpeechBubble extends Phaser.GameObjects.Graphics { 
-  constructor (scene, x, y, quote, width = 100, height = 100) {
+  constructor (scene, x, y, quote, width = 150, height = 100) {
     super(scene, { x, y });
     this.isShowing = true;
 
@@ -51,9 +51,9 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
   draw(x, y) {
     this.clear();
 
-    //  Bubble shadow
-    this.fillStyle(0x222222, 0.5);
-    this.fillRoundedRect(x+6, y+6-this.bubbleHeight, this.bubbleWidth, this.bubbleHeight, 16);
+   //  Bubble shadow
+   this.fillStyle(0x222222, 0.5);
+   this.fillRoundedRect(0+6, -y+6/*-this.bubbleHeight*/, this.bubbleWidth, this.bubbleHeight, 16);
 
     //  Bubble color
     this.fillStyle(0xffffff, 1);
@@ -62,16 +62,16 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
     this.lineStyle(4, 0x565656, 1);
 
     //  Bubble shape and outline
-    this.strokeRoundedRect(x, y-this.bubbleHeight, this.bubbleWidth, this.bubbleHeight, 16);
-    this.fillRoundedRect(x, y-this.bubbleHeight, this.bubbleWidth, this.bubbleHeight, 16);
+    this.strokeRoundedRect(/*x, y-this.bubbleHeight*/0, -y, this.bubbleWidth, this.bubbleHeight, 16);
+    this.fillRoundedRect(/*x*/0, -y/*-this.bubbleHeight*/, this.bubbleWidth, this.bubbleHeight, 16);
 
     //  Calculate arrow coordinates
-    var point1X = Math.floor(x + this.bubbleWidth / 7);
-    var point1Y = y + this.bubbleHeight -this.bubbleHeight;
-    var point2X = Math.floor(x + (this.bubbleWidth / 7) * 2);
-    var point2Y = y + this.bubbleHeight -this.bubbleHeight;
-    var point3X = Math.floor(x + this.bubbleWidth / 7);
-    var point3Y = Math.floor(y + this.bubbleHeight-this.bubbleHeight + this.arrowHeight);
+    var point1X = Math.floor(/*x +*/ this.bubbleWidth / 7);
+    var point1Y = -y + this.bubbleHeight /*-this.bubbleHeight*/;
+    var point2X = Math.floor(/*x*/ + (this.bubbleWidth / 7) * 2);
+    var point2Y = -y + this.bubbleHeight /*-this.bubbleHeight*/;
+    var point3X = Math.floor(/*x*/ + this.bubbleWidth / 7);
+    var point3Y = Math.floor(-y + this.bubbleHeight/*-this.bubbleHeight*/ + this.arrowHeight);
 
     //  Bubble arrow shadow
     this.lineStyle(4, 0x222222, 0.5);
