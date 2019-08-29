@@ -23,6 +23,7 @@ export default ({
       "...",
       "What, you don't have a license either?",
       "Look, I am willing to pay, so you will do it right?"
-    ]
+    ],
+    startQuest: "potionQuest1"
   }
 })
