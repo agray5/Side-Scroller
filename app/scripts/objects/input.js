@@ -46,7 +46,6 @@ export default class Input {
       player.walk("right");
     }
     else {
-      console.log("X", player.x, player.moveTo-10, player.moveTo && player.x < player.moveTo-10 )
       if(player.moveTo && player.x > player.moveTo+10)
         player.walk("left");
       else if(player.moveTo && player.x < player.moveTo-10)

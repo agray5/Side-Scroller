@@ -26,8 +26,6 @@ export default class UI extends Phaser.Scene {
     this.data = data;
     this.graphics = this.add.graphics();
 
-    this.button_sound = this.add.image(30, 30, "button-sound").setInteractive();
-    this.button_sound.scale = 0.3;
     this.input.on('gameobjectdown', this.onObjectClicked.bind(this));
 
     const rubies = new UIBox(this, 'rubyBar', windowWidth-100, 30, 200, 50, "Rubies:  0");
@@ -38,6 +36,9 @@ export default class UI extends Phaser.Scene {
 
     this.progressBar = new ProgressBar(this, windowWidth-400, 40);
     this.progressBar.value = 0;
+
+    this.button_sound = this.add.image(30, 30, "button-sound").setInteractive();
+    this.button_sound.scale = 0.3;
     /*
     var timer = this.time.addEvent({
       delay: 100,                // ms
@@ -53,13 +54,17 @@ export default class UI extends Phaser.Scene {
       else if(key === 'potion_reds')
         potion_reds.setText("Potion: "+Resources.get('potion_reds'))
     })
+    this.isMute = false;
   }
 
+
   onObjectClicked(pointer, object) {
-    console.log("CLicked", object, this.button_sound, object === this.button_sound)
-    if(object === this.button_sound){
-      console.log("CLicked")
-      this.scene.sound.mute = true;
+    if(object === this.button_sound) {
+      this.isMute = !this.isMute;
+      this.game.sound.mute = this.isMute;
+      //this.game.sound.mute = false
+      //console.log("CLicked", this.game.sound.mute)
+      this.button_sound.setTint(this.isMute?0x770000:0xffffff)
     }
   }
 /*

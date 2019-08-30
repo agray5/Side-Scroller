@@ -3,8 +3,6 @@ export default class DialogManager {
     this.state = initState;
     this.index = -1;
 
-    console.log("Dialog", dialogPath)
-
     this.dialogData = require("../data/dialog/"+dialogPath).default;
   }
 
@@ -38,7 +36,6 @@ export default class DialogManager {
   }
 
   transition(action) {
-    console.log("Set DONE at Text", this.dialogData[this.state].text[this.index])
     this.done = true;
     this.index = -1;
     this.state = this.dialogData[this.state].transitions[action];

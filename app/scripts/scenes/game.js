@@ -32,7 +32,6 @@ export default class Game extends Phaser.Scene {
     }
     for(let i of arr){
       if(this.objects[i[0]].create){
-        console.log("Create", this.physics)
         this.objects[i[0]].create(this);
       }
     }
@@ -56,8 +55,6 @@ export default class Game extends Phaser.Scene {
   create(/* data */) {
     this.groundLevel = 450;
     const scene = this;
-
-    this.scene.
     
 
     this.addAll([
