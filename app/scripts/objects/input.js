@@ -16,6 +16,14 @@ export default class Input {
       });
     this.input = scene.input.keyboard.createCursorKeys();
     this.scene = scene;
+    this.mode;
+
+    scene.input.keyboard.on('keyup', function (event) { 
+      this.mode = "keyboard";
+    });
+    window.addEventListener('touchstart', function() {
+      this.mode = "touch"
+    });
   }
 
   create(scene) {

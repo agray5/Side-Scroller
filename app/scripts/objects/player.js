@@ -19,7 +19,7 @@ export default class Player extends Person {
   }
 
   create() {
-    super.create();
+    super.create({}, true);
 
     const scene = this.scene;
 
