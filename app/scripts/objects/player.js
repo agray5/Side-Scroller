@@ -10,17 +10,21 @@ export default class Player extends Person {
     super(scene, 0, 0, "player");
     this.emitter;
     this.particles_rubies = this.scene.add.particles('ruby');
-    this.particles_rubies.setDepth(-1);
+    this.particles_rubies.setDepth(1);
 
     this.speed = 200;
     this.moveTo = null;
     this.state = 'idle';
+    this.setDepth(3);
   }
 
   create() {
     super.create();
 
-    const scene = this.scene 
+    const scene = this.scene;
+
+    this.sound_footsteps = scene.sound.add("footsteps", {volume: 0.6});
+    this.sound_splash = scene.sound.add("splash");
 
     this.setSize(this.width*0.3, this.height);
     this.scaleX = 0.3;
@@ -35,6 +39,9 @@ export default class Player extends Person {
   transferRubies(from_, to){
     if(Resources.get('player_rubies')){
       const amount = Resources.transferAmt('player_rubies', 'cauldron_rubies');
+
+      this.sound_splash.play();
+      setTimeout(() => this.scene.sound.play("bubble"), this.sound_splash.duration + 500);
 
       if(this.emitter) this.emitter.stop();      
       if(!this.emitter) this.emitter = this.particles_rubies.createEmitter(
@@ -73,6 +80,11 @@ export default class Player extends Person {
     let velocity = 0;
     let flip;
 
+    if(!this.sound_footsteps.isPlaying && dir !== "stop" && this.body.onFloor()) 
+      this.sound_footsteps.play();
+    else if(dir === "stop")
+      this.sound_footsteps.stop();
+
     switch(dir){
       case "right": 
         velocity = this.speed;
@@ -101,10 +113,14 @@ export default class Player extends Person {
     if(this.body.onFloor()){
       this.state = 'jump';
       this.body.setVelocityY(velocity);
+
+      //sound
+      this.scene.sound.play('jump'+Phaser.Math.Between(1, 4), {volume: 0.6})
     }
   }
 
   collect(player, toCollect) {
+    player.scene.sound.play("collect")
     Resources.increment('player_rubies');
     toCollect.destroy();
   }

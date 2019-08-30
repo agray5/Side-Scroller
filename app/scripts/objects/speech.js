@@ -84,7 +84,7 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
     this.lineBetween(point1X, point1Y, point3X, point3Y);
 
     this.content.setPosition(x + (this.bubbleWidth / 2) - (this.b.width / 2), y + (this.bubbleHeight / 2) - (this.b.height / 2));
-    this.content.setDepth(10);
+    this.content.setDepth(2);
   }
 
 

@@ -38,6 +38,7 @@ export default class SplashScreen extends Phaser.Scene {
     this.load.image('background', 'background.png');
     this.load.image('ruby', 'gems/gem5.png');
     this.load.image('logo');
+    this.load.image('button-sound', 'button_sound.png');
     this.load.image('coin', 'coinGold.png');
     this.load.image('speech-bubble', 'speechBubble.png');
     this.load.atlas('potions', 'potion.png', 'potion.json');
@@ -49,6 +50,18 @@ export default class SplashScreen extends Phaser.Scene {
     this.load.spritesheet('tiles', 'tiles.png', {frameWidth: 70, frameHeight: 70});
     this.load.spritesheet('nature', 'plants.png', {frameWidth: 70, frameHeight: 70});
     this.load.tilemapTiledJSON('map', 'map.json');
+
+    this.load.audio("bkg-music", "sound/Dance Dont Delay.mp3");
+    this.load.audio("forest", "sound/forest.wav");
+    this.load.audio("footsteps", "sound/footsteps.wav")
+    this.load.audio("splash", "sound/splash.wav")
+    this.load.audio("bubble", "sound/bubble.wav")
+    this.load.audio("collect", "sound/collect.wav")
+    this.load.audio("collect-glass", "sound/collectGlass.wav")
+    this.load.audio("jump1", "sound/jump1.mp3");
+    this.load.audio("jump2", "sound/jump2.mp3");
+    this.load.audio("jump3", "sound/jump3.mp3");
+    this.load.audio("jump4", "sound/jump4.mp3");
 
     //Plugins
     

@@ -26,6 +26,10 @@ export default class UI extends Phaser.Scene {
     this.data = data;
     this.graphics = this.add.graphics();
 
+    this.button_sound = this.add.image(30, 30, "button-sound").setInteractive();
+    this.button_sound.scale = 0.3;
+    this.input.on('gameobjectdown', this.onObjectClicked.bind(this));
+
     const rubies = new UIBox(this, 'rubyBar', windowWidth-100, 30, 200, 50, "Rubies:  0");
     this.add.existing(rubies);
 
@@ -49,6 +53,14 @@ export default class UI extends Phaser.Scene {
       else if(key === 'potion_reds')
         potion_reds.setText("Potion: "+Resources.get('potion_reds'))
     })
+  }
+
+  onObjectClicked(pointer, object) {
+    console.log("CLicked", object, this.button_sound, object === this.button_sound)
+    if(object === this.button_sound){
+      console.log("CLicked")
+      this.scene.sound.mute = true;
+    }
   }
 /*
   box(ref, x, y, width, height, text = ''){

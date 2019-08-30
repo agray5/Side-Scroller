@@ -28,6 +28,7 @@ export default class Collectable extends Phaser.Physics.Arcade.Image {
   }
 
   collect(){
+    this.scene.sound.play("collect-glass")
     Resources.increment(this.resource);
     this.destroy();
   }

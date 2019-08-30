@@ -57,6 +57,9 @@ export default class Game extends Phaser.Scene {
     this.groundLevel = 450;
     const scene = this;
 
+    this.scene.
+    
+
     this.addAll([
       ["map", Map],
       ["input", Input],
@@ -67,7 +70,15 @@ export default class Game extends Phaser.Scene {
       ["player", Player],
       ["cameras", Cameras],
       ["animations", Animations]
-    ])
+    ]);
+
+    const bgmusic = this.sound.add("bkg-music");
+    const ambience = this.sound.add("forest", {loop: true});
+    ambience.play();
+    /*bgmusic.play({
+      volume: 0.3,
+      loop: true,
+    })*/
 
     this.scene.launch('UI', this.objects);
   }
