@@ -2,6 +2,7 @@ import DataManager from '../../libs/dataManager'
 import DialogManager from '../../libs/dialogManager'
 import SpeechBubble from '../speech'
 import { checkOverlap } from '../../utils/collision'
+import {dialogSpeed} from '../../config'
 
 
 export default class Person extends Phaser.Physics.Arcade.Sprite {
@@ -40,7 +41,6 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
       if(this.speech.isShowing)
         this.speech.update(this.x, this.y-this.height/3);
 
-        console.log("Overlapping", checkOverlap(this, player))
         if(this.flags.overlap === true && !checkOverlap(this, player)) {
           this.flags.overlap = false;
       }
@@ -76,7 +76,7 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
           if(this.DialogManager.done){
             this.allowPlayText = false;
             this.scene.time.addEvent({
-              delay: 5000,
+              delay: dialogSpeed + 2000,
               callback: () => {
                 this.allowPlayText = true;
               },
@@ -85,7 +85,7 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
           }
 
           this.scene.time.addEvent({
-            delay: 3000,
+            delay: dialogSpeed,
             callback: () => {
               this.speech.hide();
               this.talking = false;

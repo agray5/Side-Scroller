@@ -1,4 +1,4 @@
-import Resources from "../libs/resources";
+import Resources from "../libs/Resources";
 import Collectable from "./prototype/collectable";
 
 export default class Cauldron extends Phaser.Physics.Arcade.Sprite {

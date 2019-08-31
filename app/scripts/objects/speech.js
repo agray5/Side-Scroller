@@ -8,6 +8,7 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
     this.bubblePadding = 10;
     this.arrowHeight = this.bubbleHeight / 4;
 
+
     this.content = this.scene.add.text(0, 0, quote, { 
       fontFamily: 'Arial', 
       fontSize: 20, 
@@ -19,8 +20,10 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
     this.b = this.content.getBounds();
   }
 
-  set(text) {
-    this.content.setText(text);
+  set(text) { 
+    if(text.prompt) this.button = this.scene.add.image(this.x-this.bubbleWidth, this.y-this.bubbleHeight, "button");
+    const setText = text.text || text;
+    this.content.setText(setText);
     this.b = this.content.getBounds();
     return this;
   }
@@ -28,6 +31,7 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
   setGAlpha(amt) {
     this.setAlpha(amt);
     this.content.setAlpha(amt);
+    if(this.button)this.button.setAlpha(amt)
   }
 
   hide() {

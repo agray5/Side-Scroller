@@ -10,7 +10,7 @@ export default class DialogManager {
 
   handleAutoTransfer(context) {
     const state = this.dialogData[this.state];
-    if(state.transitions && state.transitions.next) 
+    if((state.transitions && state.transitions.next) || state.startQuest) 
       this.transition(context, "next");
   }
 
@@ -24,6 +24,7 @@ export default class DialogManager {
 
     let text;
 
+
     switch(state.type){
       case "static": 
         text = state.text;
@@ -31,19 +32,29 @@ export default class DialogManager {
         return text;
       case "sequence":
         this.index++;
+
         text = state.text[this.index];
         if(this.index === state.text.length-1) this.handleAutoTransfer(person);
         return text;
+      case "questPrompt":
+        return {
+          text: state.text,
+          prompt: "give" 
+        }; 
     }
   }
 
   transition(context, action) {
     const data = this.dialogData[this.state];
-    if(data.startQuest) 
-      questManager.startQuest(context, context.config.namespace, data.startQuest);
     this.done = true;
     this.index = -1;
-    this.state = data.transitions[action];
+
+    if(data.startQuest){
+      questManager.startQuest(context, context.config.namespace, data.startQuest);
+      this.state = data.startQuest;
+    }
+    else 
+      this.state = data.transitions[action];
   }
 
 

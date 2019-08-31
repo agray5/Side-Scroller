@@ -17,7 +17,7 @@ class QuestManager {
         this.currentQuests[this.getName(namespace, quest)] = {
             data,
             context,
-            collider: context.scene.physics.add.overlap(context.scene.get("player"), context, QuestTypeGenerator.bind(context, namespace, quest, data))
+            //collider: context.scene.physics.add.overlap(context.scene.get("player"), context, QuestTypeGenerator.bind(context, namespace, quest, data))
         }
     
         return this.currentQuests[this.getName(namespace, quest)];
@@ -25,7 +25,7 @@ class QuestManager {
 
     endQuest(namespace, quest) {
         const data = this.currentQuests[this.getName(namespace, quest)];
-        data.collider.destroy();
+        //data.collider.destroy();
         delete this.currentQuests[this.getName(namespace, quest)];
     }
 

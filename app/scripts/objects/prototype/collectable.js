@@ -1,4 +1,4 @@
-import Resources from "../../libs/resources";
+import Resources from "../../libs/Resources";
 
 export default class Collectable extends Phaser.Physics.Arcade.Image {
   constructor(scene, x, y, resourceName, texture, frame){

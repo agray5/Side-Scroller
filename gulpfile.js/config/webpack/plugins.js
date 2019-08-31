@@ -26,6 +26,12 @@ module.exports = (env = 'development') =>
       'typeof WEBGL_RENDERER': true
     }),
 
+    new webpack.DefinePlugin({
+      'process.env': {
+          NODE_ENV: `'${env}'`,
+      }
+  }),
+
     //  HTML Plugin
     //  -----------
     //

@@ -41,6 +41,8 @@ export default class SplashScreen extends Phaser.Scene {
     this.load.image('button-sound', 'button_sound.png');
     this.load.image('coin', 'coinGold.png');
     this.load.image('speech-bubble', 'speechBubble.png');
+    this.load.image('button', 'button.png')
+
     this.load.atlas('potions', 'potion.png', 'potion.json');
     this.load.atlas('alchemy', 'Alchemy tools.png', 'alchemy.json');
     this.load.atlas('player', 'spritesheet.png','sprites.json');
@@ -64,12 +66,12 @@ export default class SplashScreen extends Phaser.Scene {
     this.load.audio("jump4", "sound/jump4.mp3");
 
     //Plugins
-    
+    /*
     const plugins = [
       ["rexbbcodetextplugin", "https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/plugins/dist/rexbbcodetextplugin.min.js", true]
     ]
     plugins.forEach(plugin => console.log("Loadied", this.load.plugin(...plugin)));
-    console.log("PLUGIN", this.plugins.get('rexbbcodetextplugin'))
+    console.log("PLUGIN", this.plugins.get('rexbbcodetextplugin'))*/
   }
 
   /**

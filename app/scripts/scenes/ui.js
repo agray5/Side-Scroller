@@ -2,7 +2,7 @@
 import { width as windowWidth, height as windowHeight } from '@/config'
 import UIBox from '@/objects/uiBox';
 import ProgressBar from '../objects/progressBar';
-import Resources from '../libs/resources';
+import Resources from '../libs/Resources';
  
 
 export default class UI extends Phaser.Scene {

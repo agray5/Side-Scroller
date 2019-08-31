@@ -1,4 +1,4 @@
-import Resources from '../libs/resources';
+import Resources from '../libs/Resources';
 import SpeechBubble from '../objects/speech'
 import Person from './prototype/person';
 /**

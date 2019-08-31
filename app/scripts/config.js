@@ -185,3 +185,10 @@ export {title, version, url} from '@/../../package.json';
  *  Export created game scenes.
  */
 export const scene = Object.values(scenes);
+
+
+
+//// GAME SETTINGS
+export const dialogSpeed = (process.env.NODE_ENV === "development")?1000:3000;
+
+console.log("Process", process.env.NODE_ENV === "development")
