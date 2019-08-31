@@ -6,7 +6,7 @@ import { checkOverlap } from '../../utils/collision'
 
 export default class Person extends Phaser.Physics.Arcade.Sprite {
   
-  create(config, isPlayer = false){
+  create(config = {}, isPlayer = false){
     const scene = this.scene 
     scene.physics.world.enable(this);
     scene.add.existing(this);
@@ -19,11 +19,12 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true);
 
     this.flags = {};
+    this.config = config;
     this.allowPlayText = true;
 
     if(!isPlayer) {
       this.talking = false;
-      this.DialogManager = new DialogManager(name);
+      this.DialogManager = new DialogManager(config.namespace);
       //Speech
       this.speech = new SpeechBubble(scene, this.x, this.y+100, "").create().hide();
       //Talk when player overlaps
@@ -66,7 +67,7 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
   
   talk() {
     if(!this.talking && this.allowPlayText) {
-      const text = this.DialogManager.getText();
+      const text = this.DialogManager.getText(this);
         if(text) {
           this.talking = true;
           this.speech.set(text).show();
