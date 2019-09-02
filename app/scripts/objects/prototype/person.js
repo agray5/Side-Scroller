@@ -35,6 +35,9 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
       this.on("failQuest", () => {
         this.DialogManager.emit("fail");
       })
+      this.on("successQuest", () => {
+        this.DialogManager.emit("success");
+      })
     }
   }
 

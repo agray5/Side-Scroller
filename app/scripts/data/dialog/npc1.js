@@ -30,6 +30,16 @@ export default ({
     type: "questPrompt",
     quest: "potionQuest1",
     text: "I'm waiting... ",
-    fail: "That's not enough potions"
-  }
+    fail: "That's not enough potions...",
+    transitions: {
+      next: "potionQuest1Success"
+    }
+  },
+  potionQuest1Success: {
+    type: "sequence",
+    text: [
+      "Here's your reward, thanks!",
+      "That really hits the spot. 😊",
+    ],
+  },
 })

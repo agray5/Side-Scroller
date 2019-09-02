@@ -53,9 +53,17 @@ const QuestTypeGenerator = (context, namespace, quest, data) => {
         e.stopPropagation()
         switch(data.type) {
             case QuestType.GIVE:
-                if(Resources.get(data.from) < data.amount)
-                    context.emit("failQuest", quest);
-                else Resources.decrement(data.from, data.amount);
+                if(!data.done){
+                    if(Resources.get(data.from) < data.amount) {
+                        context.emit("failQuest", quest);
+                    }
+                    else{
+                        data.done = true;
+                        questManager.endQuest(namespace, quest)
+                        Resources.decrement(data.from, data.amount);
+                        context.emit("successQuest", data)
+                    }
+                }
                 break;
         }
 

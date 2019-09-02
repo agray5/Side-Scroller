@@ -34,7 +34,13 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
       this.button.create(text.prompt, text.config);
       this.textPosition = TextPositions.Top;
     }
-    else this.textPosition = TextPositions.Center;
+    else { 
+      if(this.button) {
+        this.button.destroy();
+        delete this.button;
+      }
+      this.textPosition = TextPositions.Center;
+    }
 
     const setText = text.text || text;
     this.content.setText(setText);

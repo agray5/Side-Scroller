@@ -1,4 +1,5 @@
 import questManager from "./questManager";
+import { func } from "prop-types";
 
 export default class DialogManager extends Phaser.Events.EventEmitter{
   constructor(dialogPath, initState = "init") {
@@ -15,6 +16,10 @@ export default class DialogManager extends Phaser.Events.EventEmitter{
       setTimeout(() => {
         delete this.alternateText;
       }, 1500)
+    })
+
+    this.on("success", function(context) {
+      this.handleAutoTransfer(context);
     })
     
   }
