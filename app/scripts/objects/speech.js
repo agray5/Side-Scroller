@@ -1,3 +1,5 @@
+import Button from './button'
+
 export default class SpeechBubble extends Phaser.GameObjects.Graphics { 
   constructor (scene, x, y, quote, width = 150, height = 120) {
     super(scene, { x, y });
@@ -21,7 +23,14 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
   }
 
   set(text) { 
-    if(text.prompt) this.button = this.scene.add.image(this.x-this.bubbleWidth, this.y-this.bubbleHeight, "button");
+    if(text.prompt) {
+      this.button = new Button(this.scene, this.x+this.bubbleWidth/2, this.y-this.bubbleHeight)
+      this.button.create("Hello", {
+        onClickStart: function(p, g, e) {
+          this.background.setTint(new Phaser.Display.Color().random(50).color);
+        }
+      });
+    }
     const setText = text.text || text;
     this.content.setText(setText);
     this.b = this.content.getBounds();

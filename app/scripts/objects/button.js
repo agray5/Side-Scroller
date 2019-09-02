@@ -1,65 +1,26 @@
-var config = {
-  type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  backgroundColor: '#010101',
-  parent: 'phaser-example',
-  scene: {
-      preload: preload,
-      create: create
+export default class Button extends Phaser.GameObjects.Container{
+
+  /** @param {object} config
+   * @param {(pointer:Phaser.Input.Pointer) => void} config.onHover
+   * @param {(pointer:Phaser.Input.Pointer) => void} config.onClickStart
+   * @param {(pointer:Phaser.Input.Pointer) => void} config.onClickEnd */
+  create(text, config = {}, background = "button") {
+    let p = this.scene.input.activePointer
+    this.background = this.scene.add.image(0, 0, background)
+    this.text = this.scene.add.text(0, 0, text)
+
+    this.text.setOrigin(0.5, 0.5);
+    this.add([this.background, this.text])
+        .setSize(this.background.width, this.background.height)
+        .setInteractive({ useHandCursor: true }/*new Phaser.Geom.Rectangle(0, 0, this.background.width, this.background.height), Phaser.Geom.Rectangle.Overlaps*/);
+  
+    if(config.onHover) this.on("pointerover", config.onHover.bind(this));
+    if(config.onClickStart) this.on("pointerdown", config.onClickStart.bind(this));
+    if(config.onClickEnd) this.on("pointerup", config.onClickEnd.bind(this))
+    
+    this.scene.add.existing(this);
+
+    return this;
   }
-};
-
-var game = new Phaser.Game(config);
-
-function preload ()
-{
-  this.load.image('buttonBG', 'assets/sprites/button-bg.png');
-  this.load.image('buttonText', 'assets/sprites/button-text.png');
 }
 
-function create ()
-{
-  var bg = this.add.image(0, 0, 'buttonBG');
-  var text = this.add.image(0, 0, 'buttonText');
-
-  var bg2 = this.add.image(0, 80, 'buttonBG');
-  var text2 = this.add.image(0, 80, 'buttonText');
-
-  var container = this.add.container(400, 200, [ bg, text, bg2, text2 ]);
-
-  container.setInteractive(new Phaser.Geom.Circle(0, 0, 60), Phaser.Geom.Circle.Contains);
-
-  bg2.setInteractive();
-
-  container.on('pointerover', function () {
-
-      bg.setTint(0x44ff44);
-
-  });
-
-  container.on('pointerout', function () {
-
-      bg.clearTint();
-
-  });
-
-  bg2.on('pointerover', function () {
-
-      this.setTint(0xff44ff);
-
-  });
-
-  bg2.on('pointerout', function () {
-
-      this.clearTint();
-
-  });
-
-  //  Just to display the hit area, not actually needed to work
-  var graphics = this.add.graphics();
-
-  graphics.lineStyle(2, 0x00ffff, 1);
-
-  graphics.strokeCircle(container.x, container.y, container.input.hitArea.radius);
-}
