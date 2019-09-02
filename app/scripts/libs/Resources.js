@@ -1,10 +1,12 @@
+import saveManager from "./saveManager";
+
 class Resources extends Phaser.Events.EventEmitter {
   constructor() {
     super();
     this.obj = {
-      player_rubies: 0,
-      cauldron_rubies: 0,
-      potion_reds: 0
+      player_rubies: parseInt(saveManager.load("player_rubies", 0)),
+      cauldron_rubies: parseInt(saveManager.load("cauldron_rubies", 0)),
+      potion_reds: parseInt(saveManager.load("potion_reds", 0))
     }
   }
 
@@ -16,7 +18,8 @@ class Resources extends Phaser.Events.EventEmitter {
     this.obj[key] = data;
     this.emit("set", key);
 
-    console.log("I have this", key, data)
+    //Auto Save
+    saveManager.save(key, data);
     return data;
   }
 

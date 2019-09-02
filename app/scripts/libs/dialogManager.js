@@ -1,12 +1,12 @@
 import questManager from "./questManager";
 import { func } from "prop-types";
+import saveManager from "./saveManager";
 
 export default class DialogManager extends Phaser.Events.EventEmitter{
-  constructor(dialogPath, initState = "init") {
+  constructor(context, dialogPath, initState = "init") {
     super();
 
-    this.state = initState;
-    this.index = -1;
+    this.load(context, initState);
 
     this.dialogData = require("../data/dialog/"+dialogPath).default;
     
@@ -58,19 +58,44 @@ export default class DialogManager extends Phaser.Events.EventEmitter{
     switch(state.type){
       case "static": 
         this.handleAutoTransfer(person);
-        return this.getStaticText();
+        text = this.getStaticText();
+        break;
       case "sequence":
         this.index++;
+        this.save(person);
+
         text = this.getStaticText();
         if(this.index === state.text.length-1) this.handleAutoTransfer(person);
-        return text;
+        break;
       case "questPrompt":
-        return {
+        const quest = questManager.getQuestData(person.config.namespace, state.quest);
+        console.log("QUEEST", quest)
+        text = {
           text: this.getStaticText(),
-          prompt: this.startedQuest.data.type,
-          config:{ callback: this.startedQuest.callback}
+          prompt: quest.type,
+          config:{ callback: quest.callback}
         }; 
+        break;
     }
+    return text;
+  }
+
+  save(person) {
+    console.log("Save Dialog", person)
+    saveManager.save('dialog_'+person.config.namespace, {
+      index: this.index,
+      state: this.state,
+    })
+  }
+
+  load(person, initState) {
+    const loaded = saveManager.load('dialog_'+person.config.namespace, {
+      index: -1,
+      state: initState
+    })
+    console.log("LOADED Dialog", loaded)
+    this.index = loaded.index || -1;
+    this.state = loaded.state;
   }
 
   transition(context, action) {
@@ -79,11 +104,14 @@ export default class DialogManager extends Phaser.Events.EventEmitter{
     this.index = -1;
 
     if(data.startQuest){
-      this.startedQuest = questManager.startQuest(context, context.config.namespace, data.startQuest);
+      questManager.startQuest(context, context.config.namespace, data.startQuest);
       this.state = data.startQuest;
     }
     else 
       this.state = data.transitions[action];
+
+    //Auto Save
+    this.save(context);
   }
 
 

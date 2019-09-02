@@ -28,10 +28,11 @@ export default class UI extends Phaser.Scene {
 
     this.input.on('gameobjectdown', this.onObjectClicked.bind(this));
 
-    const rubies = new UIBox(this, 'rubyBar', windowWidth-100, 30, 200, 50, "Rubies:  0");
+    console.log("Resources", Resources.obj)
+    const rubies = new UIBox(this, 'rubyBar', windowWidth-100, 30, 200, 50, "Rubies:   "+Resources.get("player_rubies"));
     this.add.existing(rubies);
 
-    const potion_reds = new UIBox(this, 'potion_redBar', windowWidth-300, 30, 200, 50, "Potion:  0");
+    const potion_reds = new UIBox(this, 'potion_redBar', windowWidth-300, 30, 200, 50, "Potion:  "+Resources.get("potion_reds"));
     this.add.existing(potion_reds);
 
     this.progressBar = new ProgressBar(this, windowWidth-400, 40);

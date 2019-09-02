@@ -8,6 +8,7 @@ import Cameras from '../objects/cameras';
 import Gems from '../objects/gems';
 import Cauldron from '../objects/cauldron'; 
 import NPC1 from '../objects/npc1';
+import questManager from '../libs/questManager';
 
 export default class Game extends Phaser.Scene {
   /**
@@ -77,6 +78,7 @@ export default class Game extends Phaser.Scene {
       loop: true,
     })*/
 
+    questManager.load(this);
     this.scene.launch('UI', this.objects);
   }
 

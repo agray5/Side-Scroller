@@ -1,6 +1,7 @@
 import Resources from '../libs/Resources';
 import SpeechBubble from '../objects/speech'
 import Person from './prototype/person';
+import saveManager from '../libs/saveManager';
 /**
  * @param {Phaser.Scene} scene 
  * @param {Phaser.Tilemaps.Tilemap} map
@@ -18,10 +19,21 @@ export default class Player extends Person {
     this.setDepth(3);
   }
 
+  load() {
+    const player = saveManager.load("player")
+    if(player) this.setPosition(player.x, player.y)
+  }
+
+  save() {
+    saveManager.save("player", {x: this.x, y: this.y});
+  }
+
   create() {
     super.create({}, true);
 
     const scene = this.scene;
+
+    setInterval(this.save, 300000);
 
     this.sound_footsteps = scene.sound.add("footsteps", {volume: 0.6});
     this.sound_splash = scene.sound.add("splash");
