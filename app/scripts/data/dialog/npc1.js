@@ -29,6 +29,7 @@ export default ({
   potionQuest1: {
     type: "questPrompt",
     quest: "potionQuest1",
-    text: "They taste better than the blue ones, that's for sure. "
+    text: "I'm waiting... ",
+    fail: "That's not enough potions"
   }
 })

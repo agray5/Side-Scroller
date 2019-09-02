@@ -15,6 +15,8 @@ class Resources extends Phaser.Events.EventEmitter {
   set(key, data) {
     this.obj[key] = data;
     this.emit("set", key);
+
+    console.log("I have this", key, data)
     return data;
   }
 

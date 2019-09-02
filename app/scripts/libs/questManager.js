@@ -2,10 +2,11 @@ import Phaser from 'phaser'
 import QuestType from '../data/quests/QuestType';
 import Resources from './Resources'
 
-class QuestManager {
+class QuestManager extends Phaser.Events.EventEmitter {
 
     currentQuests = {};
     template_fields = ["name", "description"]
+
 
     getName(namespace, quest) {
         return `${namespace}.${quest}`;
@@ -13,10 +14,11 @@ class QuestManager {
 
     /** @param {Phaser.GameObjects.GameObject} context*/
     startQuest(context, namespace, quest) {
-        const data = require(`../data/quests/${namespace}`)[quest]
+        const data = require(`../data/quests/${namespace}`).default[quest]
         this.currentQuests[this.getName(namespace, quest)] = {
             data,
             context,
+            callback: QuestTypeGenerator(context, namespace, quest, data)
             //collider: context.scene.physics.add.overlap(context.scene.get("player"), context, QuestTypeGenerator.bind(context, namespace, quest, data))
         }
     
@@ -45,14 +47,20 @@ class QuestManager {
 
 const questManager =  new QuestManager();
 
-const QuestTypeGenerator = (namespace, quest, data) => {
-    switch(data.type) {
-        case QuestType.GIVE:
-            Resources.decrement(data.from, data.amount);
-            break;
-    }
+const QuestTypeGenerator = (context, namespace, quest, data) => {
+    return (p, x, y, e) => {
 
-    questManager.endQuest(namespace, quest);
+        e.stopPropagation()
+        switch(data.type) {
+            case QuestType.GIVE:
+                if(Resources.get(data.from) < data.amount)
+                    context.emit("failQuest", quest);
+                else Resources.decrement(data.from, data.amount);
+                break;
+        }
+
+        questManager.endQuest(namespace, quest);
+    }
 }
 
 export default questManager;

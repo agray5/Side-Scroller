@@ -1,5 +1,10 @@
 import Button from './button'
 
+const TextPositions = {
+  "Top": "top",
+  "Center": "center"
+}
+
 export default class SpeechBubble extends Phaser.GameObjects.Graphics { 
   constructor (scene, x, y, quote, width = 150, height = 120) {
     super(scene, { x, y });
@@ -7,7 +12,7 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
 
     this.bubbleWidth = width;
     this.bubbleHeight = height;
-    this.bubblePadding = 10;
+    this.bubblePadding =  0;
     this.arrowHeight = this.bubbleHeight / 4;
 
 
@@ -20,17 +25,17 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
       boundsAlignH: "center", // bounds center align horizontally
       boundsAlignV: "middle" });
     this.b = this.content.getBounds();
+    this.textPosition = TextPositions.Center;
   }
 
   set(text) { 
     if(text.prompt) {
-      this.button = new Button(this.scene, this.x+this.bubbleWidth/2, this.y-this.bubbleHeight)
-      this.button.create("Hello", {
-        onClickStart: function(p, g, e) {
-          this.background.setTint(new Phaser.Display.Color().random(50).color);
-        }
-      });
+      this.button = new Button(this.scene, this.x+this.bubbleWidth/2, this.y-this.bubbleHeight*1.5)
+      this.button.create(text.prompt, text.config);
+      this.textPosition = TextPositions.Top;
     }
+    else this.textPosition = TextPositions.Center;
+
     const setText = text.text || text;
     this.content.setText(setText);
     this.b = this.content.getBounds();
@@ -96,7 +101,12 @@ export default class SpeechBubble extends Phaser.GameObjects.Graphics {
     this.lineBetween(point2X, point2Y, point3X, point3Y);
     this.lineBetween(point1X, point1Y, point3X, point3Y);
 
-    this.content.setPosition(x + (this.bubbleWidth / 2) - (this.b.width / 2), y + (this.bubbleHeight / 2) - (this.b.height / 2));
+    const textX = x + (this.bubbleWidth / 2) - (this.b.width / 2);
+    let textY = y;
+    if(this.textPosition === TextPositions.Center) 
+      textY += (this.bubbleHeight / 2) - (this.b.height / 2)
+    
+    this.content.setPosition(textX, textY);
     this.content.setDepth(2);
   }
 

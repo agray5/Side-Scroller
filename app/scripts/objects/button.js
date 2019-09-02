@@ -14,10 +14,12 @@ export default class Button extends Phaser.GameObjects.Container{
         .setSize(this.background.width, this.background.height)
         .setInteractive({ useHandCursor: true }/*new Phaser.Geom.Rectangle(0, 0, this.background.width, this.background.height), Phaser.Geom.Rectangle.Overlaps*/);
   
+    console.log("BUTTON", config)
     if(config.onHover) this.on("pointerover", config.onHover.bind(this));
     if(config.onClickStart) this.on("pointerdown", config.onClickStart.bind(this));
     if(config.onClickEnd) this.on("pointerup", config.onClickEnd.bind(this))
-    
+    if(config.callback) this.on("pointerdown", config.callback)
+
     this.scene.add.existing(this);
 
     return this;

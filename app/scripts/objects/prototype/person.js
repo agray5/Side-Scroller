@@ -23,6 +23,7 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
     this.config = config;
     this.allowPlayText = true;
 
+
     if(!isPlayer) {
       this.talking = false;
       this.DialogManager = new DialogManager(config.namespace);
@@ -30,6 +31,10 @@ export default class Person extends Phaser.Physics.Arcade.Sprite {
       this.speech = new SpeechBubble(scene, this.x, this.y+100, "").create().hide();
       //Talk when player overlaps
       scene.physics.add.overlap(this, scene.get("player"), this.onOverlap, false, this);
+    
+      this.on("failQuest", () => {
+        this.DialogManager.emit("fail");
+      })
     }
   }
 
