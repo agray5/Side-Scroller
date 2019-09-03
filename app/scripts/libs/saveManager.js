@@ -4,7 +4,6 @@ class SaveManger {
   }
 
   load(key, default_) {
-    localStorage.clear()
     let loaded = JSON.parse(localStorage.getItem(key));
 
     //if(loaded) loaded = JSON.parse(loaded);

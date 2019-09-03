@@ -6,6 +6,7 @@
  *  Expose the required game scenes using this module.
  */
 
-export {default as SplashScreen} from './splash-screen';
+export {default as BootScene} from './boot';
+export {default as Preload} from './preload';
 export {default as Game} from './game';
 export {default as UI} from './ui';

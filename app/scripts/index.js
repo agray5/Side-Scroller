@@ -15,4 +15,5 @@ export function boot() {
   return new Phaser.Game(config);
 }
 
-boot();
+const game = boot();
+game.scene.start("boot");

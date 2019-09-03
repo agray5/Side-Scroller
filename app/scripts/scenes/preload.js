@@ -8,16 +8,19 @@ export default class SplashScreen extends Phaser.Scene {
    */
   constructor() {
     super({
-      key: 'SplashScreen',
+      key: 'preload'/*'SplashScreen'*/,
 
       //  Splash screen and progress bar textures.
+      
       pack: {
         files: [{
           key: 'splash-screen',
-          type: 'image'
+          type: 'image',
+          url: '/static/assets/background.png'
         }, {
           key: 'progress-bar',
-          type: 'image'
+          type: 'image',
+          url: 'progress-bar.png'
         }]
       }
     });
@@ -30,7 +33,7 @@ export default class SplashScreen extends Phaser.Scene {
    */
   preload() {
     //  Display cover and progress bar textures.
-    this.showCover();
+    //this.showCover();
     this.showProgressBar();
 
     //  HINT: Declare all game assets to be loaded here.
@@ -93,7 +96,8 @@ export default class SplashScreen extends Phaser.Scene {
    *  @private
    */
   showCover() {
-    this.add.image(0, 0, 'splash-screen').setOrigin(0);
+    const i = this.add.image(0, 0, 'splash-screen').setOrigin(0);
+    console.log("Image", i)
   }
 
   /**
@@ -102,6 +106,7 @@ export default class SplashScreen extends Phaser.Scene {
    *  @private
    */
   showProgressBar() {
+   /*
     //  Get the progress bar filler texture dimensions.
     const {width: w, height: h} = this.textures.get('progress-bar').get();
 
@@ -111,5 +116,41 @@ export default class SplashScreen extends Phaser.Scene {
     //  Crop the filler along its width, proportional to the amount of files
     //  loaded.
     this.load.on('progress', v => img.setCrop(0, 0, Math.ceil(v * w), h));
+    */
+   const width = this.cameras.main.width;
+   const height = this.cameras.main.height;
+   const barHeight = 320;
+   const barWidth = 50
+
+   const progressBar = this.add.graphics();
+   const progressBox = this.add.graphics();
+   progressBox.fillStyle(0x222222, 0.8);
+   progressBox.fillRect(width/2, height/2, barHeight, barWidth);
+	
+  
+  const loadingText = this.make.text({
+    x: width / 2,
+    y: height / 2 - 50,
+    text: 'Loading...',
+    style: {
+        font: '20px monospace',
+        fill: '#ffffff'
+    }
+  });
+
+  loadingText.setOrigin(0.5, 0.5);
+
+  this.load.on('complete', function () {
+    progressBar.destroy();
+    progressBox.destroy();
+    loadingText.destroy();
+  });
+
+
+  this.load.on("progress", (value) => {
+    progressBar.clear();
+    progressBar.fillStyle(0xffffff, 1);
+    progressBar.fillRect(width/2 + barWidth*.1, height/2, + barHeight*.1, 300 * value, barHeight - barHeight*.2);
+   })
   }
 }
